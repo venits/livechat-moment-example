@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from 'react';
+import LiveChat from "./widget-sdk";
 
-function App() {
+const App = () => {
+  useEffect( ()=> {
+    (async ()=>{
+      await LiveChat.init();
+    })();
+  });
+
+  const sendMoment = async () => {
+    await LiveChat.sendCards({
+      title: "Example Moment",
+      subtitle: "Example moment moment",
+      image: {
+        url: "https://t3.ftcdn.net/jpg/00/92/53/56/240_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg",
+      },
+      buttons: [
+        {
+          type: "webview",
+          webview_height: "full",
+          text: "Open Moment",
+          value: "https://example.com",
+          postback_id: "action_yes"
+        }
+      ]
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <p>
+        Example app for sending LiveChat moment
+      </p>
+      <button onClick={sendMoment}>
+        Send Moment
+      </button>
     </div>
   );
-}
+};
+
+
 
 export default App;
